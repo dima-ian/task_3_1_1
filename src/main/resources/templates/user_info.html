@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+
+    <meta charset="utf-8">
+
+    <title>USER INFO</title>
+
+    <link href="/css/starter-template.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+        <div class="navbar-brand" sec:authorize="isAuthenticated()">
+            Authenticated user:
+            User ID: <span sec:authentication="principal.id"></span>
+            Logged user: <span sec:authentication="name"></span>
+            Roles: <span sec:authentication="principal.authorities"></span>
+        </div>
+
+        <div class="navbar-nav ml-auto">
+            <a class="nav-link" href="/logout">Back to Home Page</a>
+        </div>
+
+    </div>
+</nav>
+
+
+<div id="viewport">
+<!-- Sidebar -->
+<div id="sidebar">
+    <header>
+        <a href="#">User</a>
+    </header>
+</div>
+
+<!-- Content -->
+<div id="content">
+    <div>
+    <h2> User Information Page </h2>
+    </div>
+
+    <!-- USERS -->
+    <section id="users">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>About User</h4>
+                        </div>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Login</th>
+                                <th>Password</th>
+                                <th>Role</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                                <th:block th:each="role : ${user.roles}">
+                                    <tr>
+                                        <td th:text="${user.id}"></td>
+                                        <td th:text="${user.name}"></td>
+                                        <td th:text="${user.login}"></td>
+                                        <td th:text="${user.password}"></td>
+                                        <td th:text="${role.role}"></td>
+                                    </tr>
+                                </th:block>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+</div>
+
+
+</body>
+</html>

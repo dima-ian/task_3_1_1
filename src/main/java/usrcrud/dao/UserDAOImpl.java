@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import usrcrud.model.User;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -13,8 +14,8 @@ import java.util.List;
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
-
-    @Autowired
+    //@Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override
@@ -55,9 +56,26 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public User getUserByUserName(String userName) {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("FROM User where login = :paramName");
+//        Session session = entityManager.unwrap(Session.class);
+//        Query query = session.createQuery("FROM User where login = :paramName");
+        Query query = entityManager.createQuery("FROM User where login = :paramName");
         query.setParameter("paramName", userName);
         return (User) query.getSingleResult();
+    }
+
+
+    public User findByUserName(String theUserName) {
+        // get the current hibernate session
+        Session currentSession = entityManager.unwrap(Session.class);
+        // now retrieve/read from database using username
+        org.hibernate.query.Query<User> theQuery = currentSession.createQuery("from User where login = :uName", User.class);
+        theQuery.setParameter("uName", theUserName);
+        User theUser = null;
+        try {
+            theUser = theQuery.getSingleResult();
+        } catch (Exception e) {
+            theUser = null;
+        }
+        return theUser;
     }
 }

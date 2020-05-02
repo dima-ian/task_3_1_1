@@ -37,7 +37,7 @@ public class UserController {
         modelAndView.addObject( "user", new User());
         modelAndView.addObject("users", this.userService.allUsers());
         modelAndView.addObject("roles", this.roleService.getRoles());
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("admin_info");
         return modelAndView;
     }
 
@@ -49,17 +49,18 @@ public class UserController {
         return new ModelAndView("redirect:/admin");
     }
 
-    @RequestMapping(value = "/admin/edit", method = RequestMethod.POST)
-    public ModelAndView editPost(@ModelAttribute("admin/user") User user, @RequestParam Long roleId) {
-        Set<Role> roleSet = Collections.singleton(roleService.getRoleById(roleId));
+    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.POST)
+    public ModelAndView editPost(@ModelAttribute("admin/user") User user, @PathVariable Long role) {  //@RequestParam
+        Set<Role> roleSet = Collections.singleton(roleService.getRoleById(role));
         user.setRoles(roleSet);
         userService.editUser(user);
         return new ModelAndView("redirect:/admin");
     }
 
-    @RequestMapping(value = "/admin/edit", method = RequestMethod.GET)
-    public ModelAndView editGet(@RequestParam Long userId, ModelAndView modelAndView) {
-        modelAndView.setViewName("edit");
+    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.GET)
+    public ModelAndView editGet(@PathVariable("id") Long userId, ModelAndView modelAndView) {  //RequestParam
+        //modelAndView.setViewName("edit");
+        modelAndView.setViewName("admin_info");
         //ModelAndView model = new ModelAndView("edit");
         User user = userService.getUserById(userId);
         modelAndView.addObject("user", user);
@@ -78,10 +79,13 @@ public class UserController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView infoPageUser(ModelAndView modelAndView, Principal principal) {
         String name = principal.getName();
-        User user = userService.getUserByUserName(name);
+        System.out.println(name);
+        //User user = userService.getUserByUserName(name);
+        User user = userService.findByUserName(name);
         System.out.println(user);
         modelAndView.addObject(user);
-        modelAndView.setViewName("the_user");
+        //modelAndView.setViewName("the_user");
+        modelAndView.setViewName("user_info");
         return modelAndView;
     }
 

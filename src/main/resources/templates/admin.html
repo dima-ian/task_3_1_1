@@ -57,7 +57,7 @@
 				Password <input type="text" th:field="*{user.password}"/>
 			</td>
 			<td> Role
-				<select th:name="roleId">
+				<select th:name="role">
 					<option th:each="role : ${roles}"
 							th:value="${role.getId()}"
 							th:text="${role.role}">
@@ -69,6 +69,7 @@
 			</td>
 		</tr>
 	</form>
+
 </table>
 <form th:action="@{/logout}" method="POST">
 	<input type="submit" value="Logout"/>

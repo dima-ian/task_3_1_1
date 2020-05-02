@@ -1,0 +1,20 @@
+#mainPage{
+    margin-right: 5%;
+    width: 80%;
+    background-color: #777777;
+}
+
+.nav{
+    margin-top: 20px;
+}
+
+#newUser  {
+    align-items: center;
+}
+
+.tab-pane{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    ilign-items: center;
+}

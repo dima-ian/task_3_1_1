@@ -20,6 +20,7 @@
 
 <div sec:authorize="isAuthenticated()">
     Authenticated user roles:
+    User ID: <span sec:authentication="principal.id"></span>
     Logged user: <span sec:authentication="name"></span>
     Roles: <span sec:authentication="principal.authorities"></span>
 </div>

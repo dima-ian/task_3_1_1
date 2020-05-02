@@ -19,7 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
-
     @Autowired
     private LoginSuccessHandler loginSuccessHandler;
 

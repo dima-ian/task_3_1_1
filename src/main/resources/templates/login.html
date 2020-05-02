@@ -1,42 +1,46 @@
 <!DOCTYPE HTML>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>LOGIN PAGE</title>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/login.css">
 
-    <title>LOGIN PAGE</title>
 </head>
 
 <body>
 
 <div class="container">
 
-<h4>Login Form</h4>
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Please sign In</h5>
+                    <form th:action="@{/login}" method='POST' class="form-signin">
+                        <div class="form-label-group" th:marginheight="5px">
+                            <input type="text" name="name" class="form-control" placeholder="Username" required autofocus>
+                        </div>
 
-<form th:action="@{/login}" method='POST'>
-    <table>
-        <tr>
-            <td>Username:</td>
-            <td><input type='text' name='name' value=''></td>
-        </tr>
-        <tr>
-            <td>Password:</td>
-            <td><input type='password' name='password'/></td>
-        </tr>
-        <tr>
-            <td ><input th:type="submit" th:value="submit"/></td>
-        </tr>
-    </table>
-</form>
-
+                        <div class="form-label-group" th:marginheight="5px">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block text-uppercase" th:marginheight="5px" type="submit">Sign in</button>
+                        <hr class="my-4">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 
 </body>
 </html>

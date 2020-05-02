@@ -13,5 +13,6 @@ public interface UserService extends UserDetailsService {
     void editUser(User user);
     User getUserById(Long id);
     User getUserByUserName(String userName);
+    User findByUserName(String userName);
 
 }
