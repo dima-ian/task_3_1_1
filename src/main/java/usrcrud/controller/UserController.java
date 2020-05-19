@@ -37,7 +37,7 @@ public class UserController {
         modelAndView.addObject( "user", new User());
         modelAndView.addObject("users", this.userService.allUsers());
         modelAndView.addObject("roles", this.roleService.getRoles());
-        modelAndView.setViewName("admin_info");
+        modelAndView.setViewName("admin");
         return modelAndView;
     }
 
@@ -49,43 +49,36 @@ public class UserController {
         return new ModelAndView("redirect:/admin");
     }
 
-    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.POST)
-    public ModelAndView editPost(@ModelAttribute("admin/user") User user, @PathVariable Long role) {  //@RequestParam
-        Set<Role> roleSet = Collections.singleton(roleService.getRoleById(role));
+    @RequestMapping(value = "/admin/update", method = RequestMethod.POST)
+    public ModelAndView updatePost(@ModelAttribute("admin/user") User user, @RequestParam Long roleId) {
+        Set<Role> roleSet = Collections.singleton(roleService.getRoleById(roleId));
         user.setRoles(roleSet);
         userService.editUser(user);
         return new ModelAndView("redirect:/admin");
     }
 
-    @RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.GET)
-    public ModelAndView editGet(@PathVariable("id") Long userId, ModelAndView modelAndView) {  //RequestParam
-        //modelAndView.setViewName("edit");
-        modelAndView.setViewName("admin_info");
-        //ModelAndView model = new ModelAndView("edit");
-        User user = userService.getUserById(userId);
-        modelAndView.addObject("user", user);
+    @RequestMapping(value = "/admin/update")
+    public ModelAndView updateGet(@RequestParam Long id, ModelAndView model) {
+        model.setViewName("edit");
+        User user = userService.getUserById(id);
+        model.addObject("user", user);
         List<Role> roles = roleService.getRoles();
-        modelAndView.addObject("roles", roles);
-        return modelAndView;
+        model.addObject("roles", roles);
+        return model;
     }
 
     @RequestMapping(value = "/admin/delete")
-    public ModelAndView deleteUser(@RequestParam Long userId) {
-        System.out.println("User ID to DELETE = " + userId);
-        userService.deleteUser(userId);
+    public ModelAndView deleteUser(@RequestParam Long id) {
+        userService.deleteUser(id);
         return new ModelAndView("redirect:/admin");
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView infoPageUser(ModelAndView modelAndView, Principal principal) {
         String name = principal.getName();
-        System.out.println(name);
-        //User user = userService.getUserByUserName(name);
         User user = userService.findByUserName(name);
-        System.out.println(user);
         modelAndView.addObject(user);
-        //modelAndView.setViewName("the_user");
-        modelAndView.setViewName("user_info");
+        modelAndView.setViewName("user");
         return modelAndView;
     }
 

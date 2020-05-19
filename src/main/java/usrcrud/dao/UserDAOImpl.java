@@ -1,7 +1,6 @@
 package usrcrud.dao;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import usrcrud.model.User;
@@ -14,7 +13,6 @@ import java.util.List;
 @Transactional
 public class UserDAOImpl implements UserDAO {
 
-    //@Autowired
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -56,8 +54,6 @@ public class UserDAOImpl implements UserDAO {
     @Override
     @Transactional
     public User getUserByUserName(String userName) {
-//        Session session = entityManager.unwrap(Session.class);
-//        Query query = session.createQuery("FROM User where login = :paramName");
         Query query = entityManager.createQuery("FROM User where login = :paramName");
         query.setParameter("paramName", userName);
         return (User) query.getSingleResult();
@@ -65,9 +61,7 @@ public class UserDAOImpl implements UserDAO {
 
 
     public User findByUserName(String theUserName) {
-        // get the current hibernate session
         Session currentSession = entityManager.unwrap(Session.class);
-        // now retrieve/read from database using username
         org.hibernate.query.Query<User> theQuery = currentSession.createQuery("from User where login = :uName", User.class);
         theQuery.setParameter("uName", theUserName);
         User theUser = null;

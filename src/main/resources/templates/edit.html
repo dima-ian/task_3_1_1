@@ -1,64 +1,78 @@
-<!DOCTYPE HTML>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-
+<!DOCTYPE html>
+<html     xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          lang="en">
 <head>
-    <!-- Required meta tags -->
+
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link href="/css/starter-template.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="/static/css/navbar.css">
 
-    <title>Edit User's Data</title>
+    <title>EDIT USER PANEL</title>
+
 </head>
-
 <body>
+    <form class="form-horizontal" th:action="@{/admin/update}" th:method="POST"  th:object="${user}">
 
-<div class="container">
+        <fieldset>
 
-    <h3> User's info for update below</h3>
-    <hr>
+            <div class="control-group">
 
-<form th:action="@{/admin/edit}" th:object="${user}" method="post">
-    Name
-    <div th:text="${user.name}"></div>
-    Login
-    <div th:text="${user.login}"></div>
-    Password
-    <div th:text="${user.password}"></div>
-    <table>
-        <input type="hidden" th:field="*{id}"/>
-        <input type="hidden" th:field="*{name}"/>
-        <tr>
-            <td>Login
-                <input type="text" th:field="*{login}"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Password
-                <input type="text" th:field="*{password}"/>
-            </td>
-        </tr>
-        <tr>
-            <td> Role
-                <select th:name="roleId">
-                    <option th:each="role : ${roles}"
-                            th:value="${role.getId()}"
-                            th:text="${role.role}">
-                    </option>
-                </select></td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><input type="submit" value="Update"></td>
-        </tr>
-    </table>
-</form>
+                <!-- Name -->
+                <div class="controls">
+                    <input type="text" id="id" name="id" value="" th:value="${user.id}"  placeholder="" class="input-xlarge disabled">
+                </div>
 
-<a th:href="@{/logout}">Back to Home Page</a>
+            </div>
 
-</div>
+            <div class="control-group">
+                <!-- Name -->
+                <label class="control-label" for="name">name</label>
+                <div class="controls">
+                    <input type="text" id="name" name="name" value="" th:value="${user.name}" placeholder="" class="input-xlarge">
+                </div>
+            </div>
 
+            <div class="control-group">
+                <!-- Login -->
+                <label class="control-label"  for="login">login</label>
+                <div class="controls">
+                    <input type="text" id="login" name="login" value="" th:value="${user.login}" placeholder="" class="input-xlarge">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Password-->
+                <label class="control-label" for="password">password</label>
+                <div class="controls">
+                    <input type="password" id="password" name="password" value="" th:value="${user.password}" placeholder="" class="input-xlarge">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Password-->
+                <label class="control-label" >role</label>
+                <div class="controls">
+                    <select th:name="roleId">
+                        <option th:each="role : ${roles}"
+                                th:value="${role.getId()}"
+                                th:text="${role.getRole()}">
+                        </option>
+                    </select></td>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <!-- Button -->
+                <div class="controls">
+                    <button type="submit" class="btn btn-success"> update </button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </body>
 </html>
